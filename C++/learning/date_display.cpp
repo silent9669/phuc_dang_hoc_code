@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <algorithm>
 using namespace std;
 
 class Date{
