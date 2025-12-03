@@ -1,26 +1,44 @@
 #include <bits/stdc++.h>
-#include <ios>
-#include <iostream>
 
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int a,b;
-    cin>>a>>b;
+    int n;
+    cin >> n;
 
-    int year = 0;
-    while (a < b)
+    while(n--)
     {
-        a *= 3;
-        b *=2;
-        year++;
-    }
+        int x;
+        cin >> x;
 
-    cout << year << endl;
+        int arr[1000];
+
+        for (int i = 0; i < x; i++)
+        {
+            cin >> arr[i];
+        }
+
+        int count = 0;
+        for (int i = 0; i < x - 1; i++)
+        {
+            if (abs(arr[i] - arr[i + 1]) == 1)
+            {
+                count++;
+            }
+        }
+
+        if (2 * count > (x-1))
+        {
+            cout << "Yes" << endl;
+        }
+        else
+        {
+            cout << "No" << endl;
+        }
+    }
 
     return 0;
 }

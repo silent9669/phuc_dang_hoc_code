@@ -1,3 +1,19 @@
-//
-// Created by phucdang on 28/11/25.
-//
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string s;
+    cin >> s;
+
+    if (s[0] >= 'a' && s[0] <= 'z')
+    {
+        s[0] = toupper(s[0]);
+    }
+
+    cout << s << endl;
+
+    return 0;
+}
