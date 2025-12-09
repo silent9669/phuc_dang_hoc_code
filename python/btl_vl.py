@@ -33,7 +33,7 @@ def suy_luan_cong_thuc():
 
 def ve_do_thi(x0, y0, phi_do):
     phi_rad = np.radians(phi_do)
-    t = np.linspace(0, 2*np.pi/5, 1000)
+    t = np.linspace(0, 2*np.pi/5, 100)
 
     x = x0 * np.cos(5*t)
     y = y0 * np.cos(5*t + phi_rad)
