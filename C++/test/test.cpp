@@ -1,14 +1,16 @@
-#include <bits/stdc++.h>
+#include<iostream>
 using namespace std;
-
-int main(){
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  
-  string s;
-  getline(cin,s);
-
-  cout << "Hello " << s;
-
-  return 0;
+int reverseNum(int n)
+{
+  string m = to_string(n);
+  reverseNum(m.begin(), m.end());
+  return stoi(m);
 }
+int main()
+{
+    int n;
+    cin>>n;
+    cout<<reverseNum(n);
+    return 0;
+}
+
