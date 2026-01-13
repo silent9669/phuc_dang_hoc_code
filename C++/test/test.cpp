@@ -1,16 +1,20 @@
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
-int reverseNum(int n)
-{
-  string m = to_string(n);
-  reverseNum(m.begin(), m.end());
-  return stoi(m);
-}
-int main()
-{
-    int n;
-    cin>>n;
-    cout<<reverseNum(n);
-    return 0;
-}
 
+int main(){
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  
+  int n;
+  cin >> n;
+
+  int count = 0;
+  int temp = 1;
+  for (size_t i = 1; i <= n; i++){
+    count += temp;
+    temp += 2;
+  }
+  cout << count;
+  
+  return 0;
+}
