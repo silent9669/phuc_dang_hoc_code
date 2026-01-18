@@ -1,20 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-int main(){
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  
-  int n;
-  cin >> n;
+void hello() { cout << "Hello, World!" << endl; }
 
-  int count = 0;
-  int temp = 1;
-  for (size_t i = 1; i <= n; i++){
-    count += temp;
-    temp += 2;
-  }
-  cout << count;
-  
+int main() {
+  hello();
   return 0;
 }
