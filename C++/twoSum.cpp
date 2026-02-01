@@ -38,3 +38,4 @@ TEST_CASE("Test twoSum") {
   int target3 = 6;
   vector<int> result3 = sol.twoSum(nums3, target3);
   CHECK(result3 == vector<int>{0, 1});
+}

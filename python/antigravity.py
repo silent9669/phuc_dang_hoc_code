@@ -7,6 +7,6 @@ client = openai.OpenAI(
 
 response = client.chat.completions.create(
     model="gemini-3-flash",
-    messages=[{"role": "user", "content": "Hello, please introduce yourself"}]
+    messages=[{"role": "user", "content": "你好，请自我介绍"}]
 )
 print(response.choices[0].message.content)
