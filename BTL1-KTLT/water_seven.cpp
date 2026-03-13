@@ -350,7 +350,7 @@ bool evaluateRoute(int grid[MAX_GRID][MAX_GRID], int rows, int cols,
 
   // fil value tu ben phai
   for (int i = 1; i < rows; i++) {
-    if (grid[i][0] != -1 dp[i - 1][0] != INT_MAX) {
+    if (grid[i][0] != -1 && dp[i - 1][0] != INT_MAX) {
       dp[i][0] = dp[i - 1][0] + grid[i][0];
     }
   }
