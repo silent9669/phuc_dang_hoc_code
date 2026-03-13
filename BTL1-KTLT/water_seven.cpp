@@ -127,7 +127,7 @@ int conflictSimulation(char character[FIXED_CHARACTER][MAX_NAME],
                        int hp[FIXED_CHARACTER], int skill[FIXED_CHARACTER],
                        int shipHP, int repairCost) {
   // tim skill luffy & usopp
-  int skill_Luffy, skill_Usopp;
+  int skill_Luffy = 0, skill_Usopp = 0;
   for (int i = 0; i < FIXED_CHARACTER; i++) {
     if (strcmp(character[i], "LUFFY") == 0) {
       skill_Luffy = skill[i];
@@ -146,7 +146,7 @@ int conflictSimulation(char character[FIXED_CHARACTER][MAX_NAME],
       return conflictIndex;
     }
 
-    int id = conflictIndex % 6;
+    int id = ((conflictIndex % 6) + 6) % 6;
     if (id == 0) {
       conflictIndex += 255;
     } else if (id == 1) {
@@ -228,6 +228,8 @@ void resolveDuel(char character[FIXED_CHARACTER][MAX_NAME],
 
   // copy name nhan vat vao array duel
   int duel_count = 0;
+  if (best_mask == -1)
+    return;
   for (int i = 0; i < 5; i++) {
     if (best_mask & (1 << i)) {
       int index = members[i];
@@ -270,7 +272,14 @@ void decodeCP9Message(char character[FIXED_CHARACTER][MAX_NAME],
   string reversed_message = "";
   for (int i = 0; i < message.length(); i += B) {
     string block = message.substr(i, B);
-    reverse(block.begin(), block.end());
+    int left = 0, right = (int)block.length() - 1;
+    while (left < right) {
+      char temp = block[left];
+      block[left] = block[right];
+      block[right] = temp;
+      left++;
+      right--;
+    }
     reversed_message += block;
   }
 
