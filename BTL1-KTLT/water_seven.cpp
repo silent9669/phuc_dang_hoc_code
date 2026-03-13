@@ -137,7 +137,8 @@ int conflictSimulation(char character[FIXED_CHARACTER][MAX_NAME],
     }
   }
   int conflictIndex =
-      skill_Luffy - skill_Usopp + (repairCost / 100) + ((500 - shipHP) / 50);
+      (int)ceil((double)(skill_Luffy - skill_Usopp) +
+                (double)repairCost / 100.0 + (double)(500 - shipHP) / 50.0);
 
   // tinh final conflictIndex
   int event_count = 0;
