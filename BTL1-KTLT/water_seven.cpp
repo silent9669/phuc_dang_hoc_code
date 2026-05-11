@@ -15,11 +15,23 @@ bool readInput(const string &filename,
 
   if (!inputfile)
     return false;
-  string name;
-  int val1, val2;
+  const char *validCrew[FIXED_CHARACTER] = {"LUFFY", "ZORO",    "NAMI", "USOPP",
+                                            "SANJI", "CHOPPER", "ROBIN"};
 
   int count = 0;
-  while (inputfile >> name >> val1 >> val2) {
+  string line;
+  while (getline(inputfile, line)) {
+    if (line.empty()) {
+      continue;
+    }
+
+    stringstream ss(line);
+    string name, extraToken;
+    int val1, val2;
+    if (!(ss >> name >> val1 >> val2) || (ss >> extraToken)) {
+      return false;
+    }
+
     // check name = GOING_MERRY
     if (name == "GOING_MERRY") {
       shipHP = val1;
@@ -39,6 +51,17 @@ bool readInput(const string &filename,
       continue;
     }
 
+    bool isValidCrew = false;
+    for (int i = 0; i < FIXED_CHARACTER; i++) {
+      if (name == validCrew[i]) {
+        isValidCrew = true;
+        break;
+      }
+    }
+    if (!isValidCrew) {
+      continue;
+    }
+
     // loop check nhan vat
     int check = -1;
     for (int i = 0; i < count; i++) {
@@ -50,6 +73,9 @@ bool readInput(const string &filename,
 
     // add nhan vat moi
     if (check == -1) {
+      if (count >= FIXED_CHARACTER) {
+        continue;
+      }
       strcpy(character[count], name.c_str());
       hp[count] = val1;
       skill[count] = val2;
@@ -89,6 +115,12 @@ bool readInput(const string &filename,
 
 // Task 1
 int damageEvaluation(int shipHP, int repairCost) {
+  if (repairCost < 0) {
+    repairCost = 0;
+  } else if (repairCost > 3000) {
+    repairCost = 3000;
+  }
+
   // xet dieu kien dung
   if (shipHP >= 455) {
     return repairCost;
@@ -116,7 +148,11 @@ int damageEvaluation(int shipHP, int repairCost) {
   }
 
   if (sum == digitSum) {
-    return ceil(repairCost * 1.5);
+    int updatedCost = (int)ceil(repairCost * 1.5);
+    if (updatedCost > 3000) {
+      updatedCost = 3000;
+    }
+    return updatedCost;
   }
 
   return repairCost;
@@ -185,7 +221,8 @@ void resolveDuel(char character[FIXED_CHARACTER][MAX_NAME],
   }
 
   // tinh usopp resistance
-  int U = skill_Usopp + (conflictIndex / 20) + (repairCost / 500);
+  int U = (int)ceil(skill_Usopp + (double)conflictIndex / 20.0 +
+                    (double)repairCost / 500.0);
 
   // tim index crewmate con lai
   int members[5];
@@ -229,13 +266,16 @@ void resolveDuel(char character[FIXED_CHARACTER][MAX_NAME],
 
   // copy name nhan vat vao array duel
   int duel_count = 0;
-  if (best_mask == -1)
+  if (best_mask <= 0)
     return;
   for (int i = 0; i < 5; i++) {
     if (best_mask & (1 << i)) {
       int index = members[i];
       strcpy(duel[duel_count++], character[index]);
     }
+  }
+  for (int i = duel_count; i < FIXED_CHARACTER; i++) {
+    duel[i][0] = '\0';
   }
 }
 
@@ -245,21 +285,24 @@ void decodeCP9Message(char character[FIXED_CHARACTER][MAX_NAME],
                       int conflictIndex, int repairCost, char cipherText[],
                       char resultText[]) {
   // checkSum
+  int len = strlen(cipherText);
+  if (len < 3 || cipherText[len - 3] != '#' || !isdigit(cipherText[len - 2]) ||
+      !isdigit(cipherText[len - 1])) {
+    strcpy(resultText, "");
+    return;
+  }
+
   string message = "";
   int checkSum1 = 0;
 
-  for (int i = 0; i < strlen(cipherText); i++) {
-    if (cipherText[i] == '#') {
-      break;
-    } else {
-      message += cipherText[i];
-      checkSum1 += (int)cipherText[i];
-    }
+  for (int i = 0; i < len - 3; i++) {
+    message += cipherText[i];
+    checkSum1 += (int)cipherText[i];
   }
   checkSum1 %= 100;
 
-  int checkSum2 = (cipherText[strlen(cipherText) - 2] - '0') * 10 +
-                  (cipherText[strlen(cipherText) - 1] - '0');
+  int checkSum2 =
+      (cipherText[len - 2] - '0') * 10 + (cipherText[len - 1] - '0');
 
   if (checkSum1 != checkSum2) {
     strcpy(resultText, "");

@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include <bits/stdc++.h>
 #include <doctest/doctest.h>
+#include <iostream>
 
 using namespace std;
 

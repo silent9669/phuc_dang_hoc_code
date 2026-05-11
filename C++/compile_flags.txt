@@ -1,0 +1,6 @@
+-std=c++17
+-Wall
+-Wextra
+-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX15.4.sdk/usr/include/c++/v1
+-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+-isystem/Library/Developer/CommandLineTools/usr/include

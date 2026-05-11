@@ -1,0 +1,21 @@
+# Project-specific clangd configuration
+# Place this file in your C++ project directory
+
+CompileFlags:
+  Add:
+    - -std=c++17
+    - -Wall
+    - -Wextra
+
+Index:
+  # Disable background indexing to reduce noise
+  Background: Skip
+
+Diagnostics:
+  # Completely disable unused include warnings
+  UnusedIncludes: None
+  MissingIncludes: None
+
+InlayHints:
+  # Disable inlay hints that can be distracting
+  Enabled: No
